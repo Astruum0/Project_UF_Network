@@ -107,7 +107,7 @@ class Ball:
         )
 
 
-class Game:
+class Pong_game:
     numbers = [pygame.image.load(f"score/{i}.png") for i in range(8)]
 
     def __init__(self, id):
