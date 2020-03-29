@@ -1,7 +1,7 @@
 import socket
-from _thread import *
+from _thread import start_new_thread
 import pickle
-from game import Game
+from pong_class import Pong_game
 
 server = "192.168.1.38"
 port = 5555
@@ -21,7 +21,7 @@ games = {}
 idCount = 0
 
 
-def threaded_client(conn, p, gameId):
+def online_pong(conn, p, gameId):
     global idCount
     conn.send(str.encode(str(p)))
 
@@ -45,7 +45,8 @@ def threaded_client(conn, p, gameId):
         except:
             break
 
-    print("Lost connection")
+    print(f"Player {p+1} disconnected")
+
     try:
         del games[gameId]
         print("Closing Game", gameId)
@@ -57,16 +58,20 @@ def threaded_client(conn, p, gameId):
 
 while True:
     conn, addr = s.accept()
-    print("Connected to:", addr)
+    game_choosen = conn.recv(4096).decode()
+    print("Connected to : ", addr)
+    print(f"Looking for available {game_choosen} lobbies...")
 
-    idCount += 1
-    p = 0
-    gameId = (idCount - 1) // 2
-    if idCount % 2 == 1:
-        games[gameId] = Game(gameId)
-        print("Creating a new game...")
-    else:
-        games[gameId].connected = True
-        p = 1
+    if game_choosen == "Pong":
+        idCount += 1
+        p = 0
+        gameId = (idCount - 1) // 2
+        if idCount % 2 == 1:
+            games[gameId] = Pong_game(gameId)
+            print("Creating a new game...")
+        else:
+            print(f"Connecting to Game {gameId} ...")
+            games[gameId].connected = True
+            p = 1
 
-    start_new_thread(threaded_client, (conn, p, gameId))
+        start_new_thread(online_pong, (conn, p, gameId))
