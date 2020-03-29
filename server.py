@@ -15,8 +15,6 @@ except socket.error as e:
 
 s.listen(2)
 print("Waiting for a connection, Server Started")
-
-connected = set()
 games = {}
 idCount = 0
 
