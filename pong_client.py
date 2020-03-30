@@ -2,11 +2,13 @@ import pygame
 from network_for_client import Network
 import pickle
 
+pseudo = input("Type a pseudo : ")
+
 pygame.init()
 
 clock = pygame.time.Clock()
 pygame.font.init()
-bg = pygame.image.load("bg.png")
+bg = pygame.image.load("sprites_pong/bg.png")
 width = 800
 height = 500
 win = pygame.display.set_mode((width, height))
@@ -16,7 +18,7 @@ font = pygame.font.Font("PixelOperator8.ttf", 20)
 waiting_text = font.render("Waiting for Player...", 1, (255, 255, 255), True)
 
 jeu = True
-net = Network("Pong")
+net = Network("Pong", pseudo)
 player = int(net.getP())
 print("You are Player", player + 1)
 
