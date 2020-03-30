@@ -6,7 +6,7 @@ pygame.init()
 
 clock = pygame.time.Clock()
 pygame.font.init()
-bg = pygame.image.load("bg.png")
+bg = pygame.image.load("sprites_pong/bg.png")
 width = 800
 height = 500
 win = pygame.display.set_mode((width, height))
