@@ -3,8 +3,6 @@ from pygame.locals import QUIT, K_UP, K_LEFT, K_RIGHT, K_DOWN, K_SPACE, K_s
 from random import randint
 import time
 
-pygame.font.init()
-
 
 class Snake:
     colors = [
@@ -15,6 +13,8 @@ class Snake:
         (90, 90, 90),
     ]
     hearts = [pygame.image.load(f"sprites_snake/hearts{i}.png") for i in range(1, 4)]
+
+    forbidden_move = {"UP": "DOWN", "DOWN": "UP", "LEFT": "RIGHT", "RIGHT": "LEFT"}
 
     def __init__(self, coords, i, name, length=20, start_dir="UP"):
         self.snake_id = i
@@ -31,13 +31,6 @@ class Snake:
         self.blink = True
         self.blinkIndex = 0
         self.font_size = 30
-        self.font = pygame.font.Font("PixelOperator8.ttf", self.font_size)
-        self.pseudo = self.font.render(self.name, 1, (255, 255, 255), True)
-
-        while self.pseudo.get_width() > 180:
-            self.font_size -= 1
-            self.font = pygame.font.Font("PixelOperator8.ttf", self.font_size)
-            self.pseudo = self.font.render(self.name, 1, (255, 255, 255), True)
 
     def updateSnakePos(self):
 
@@ -84,16 +77,25 @@ class Snake:
         ):
             self.state = "normal"
 
+        if self.state == "invulnerable":
+            self.blinkIndex += 1
+            if self.blinkIndex >= 15:
+                self.blink = not self.blink
+                self.blinkIndex = 0
+
     def dead(self):
         if self.lives <= 0:
             self.state = "dead"
-            self.pseudo = self.font.render(self.name, 1, (80, 80, 80,), True)
             return True
         else:
             return False
 
     def move(self, direction):
-        self.directions[-1] = direction
+        if (
+            direction != "none"
+            and not Snake.forbidden_move[self.directions[-1]] == direction
+        ):
+            self.directions[-1] = direction
 
     def append_length(self, iterate):
         for _ in range(iterate):
@@ -109,37 +111,24 @@ class Snake:
             elif self.state == "invulnerable" and self.blink:
                 pygame.draw.rect(win, Snake.colors[4], (x, y, self.size, self.size))
 
-        if self.state == "invulnerable":
-            self.blinkIndex += 1
-            if self.blinkIndex >= 10:
-                self.blink = not self.blink
-                self.blinkIndex = 0
-
     def showStats(self, win):
         if self.lives > 0:
             win.blit(Snake.hearts[self.lives - 1], (900, 52 + self.snake_id * 120))
-        win.blit(
-            self.pseudo,
-            (
-                895 - self.pseudo.get_width(),
-                50 + self.snake_id * 120 + (30 - self.font_size) // 2,
-            ),
-        )
 
     def reset(self):
         self.coords = [self.starting_coords for _ in range(self.startlength)]
         self.directions = ["none" for _ in range(self.startlength - 1)] + [
             self.startdir
         ]
-        self.pseudo = self.font.render(self.name, 1, (255, 255, 255), True)
+        # self.pseudo = self.font.render(self.name, 1, (255, 255, 255), True)
         self.lives = 3
         self.state = "normal"
 
 
-class snake_game:
+class Snake_game:
+    # pygame.font.init()
     starting_coords = [(100, 100), (595, 100), (100, 595), (595, 595)]
     starting_dirs = ["RIGHT", "LEFT"]
-    font = pygame.font.Font("PixelOperator8.ttf", 40)
 
     def __init__(self, id):
         self.id = id
@@ -155,11 +144,11 @@ class snake_game:
     def newPlayer(self, name):
         self.players.append(
             Snake(
-                snake_game.starting_coords[self.players_nbr],
+                Snake_game.starting_coords[self.players_nbr],
                 self.players_nbr,
                 name,
                 length=20,
-                start_dir=snake_game.starting_dirs[self.players_nbr % 2],
+                start_dir=Snake_game.starting_dirs[self.players_nbr % 2],
             )
         )
         self.players_nbr = len(self.players)
@@ -195,12 +184,6 @@ class snake_game:
                 self.startTimeShowWinner = time.time()
                 self.showWinner = True
                 self.winner = self.players[0]
-                self.winnerSurface = snake_game.font.render(
-                    self.winner.name, 1, (self.winner.color), True
-                )
-                self.winsSurface = snake_game.font.render(
-                    "Wins !", 1, (self.winner.color), True
-                )
 
         else:
             if time.time() - self.startTimeShowWinner > 3:
@@ -226,59 +209,34 @@ class snake_game:
         for all_s in self.players + self.dead_players:
             all_s.showStats(win)
 
-        if self.showWinner:
-            win.blit(
-                self.winnerSurface,
-                (
-                    700 // 2 - self.winnerSurface.get_width() // 2,
-                    700 // 2 - self.winnerSurface.get_height() // 2 - 21,
-                ),
-            )
-            win.blit(
-                self.winsSurface,
-                (
-                    700 // 2 - self.winsSurface.get_width() // 2,
-                    700 // 2 - self.winsSurface.get_height() // 2 + 21,
-                ),
-            )
-
         pygame.draw.line(win, (255, 255, 255), (700, 0), (700, 700), 2)
 
 
-if __name__ == "__main__":
+def show_font(game, win, font, surfaces):
+    if game.started and len(game.players) == 1:
+        winnerSurface = font.render(game.winner.name, 1, (game.winner.color), True)
+        winsSurface = font.render("Wins !", 1, (game.winner.color), True)
 
-    win = pygame.display.set_mode((1000, 700))
-    clock = pygame.time.Clock()
-    jeu = True
-
-    game = snake_game(0)
-    game.newPlayer("Astruum")
-    game.newPlayer("o4")
-    game.newPlayer("Malgache")
-    while jeu:
-        clock.tick(45)
-        win.fill((0, 0, 0))
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                jeu = False
-
-        keys = pygame.key.get_pressed()
-        if keys[K_UP]:
-            game.moveSnake(0, "UP")
-        if keys[K_DOWN]:
-            game.moveSnake(0, "DOWN")
-        if keys[K_LEFT]:
-            game.moveSnake(0, "LEFT")
-        if keys[K_RIGHT]:
-            game.moveSnake(0, "RIGHT")
-        if keys[K_SPACE]:
-            for s in game.players:
-                s.append_length(1)
-        if keys[K_s]:
-            game.started = True
-
-        if game.started:
-            game.update()
-        game.show(win)
-
-        pygame.display.update()
+    if game.showWinner:
+        win.blit(
+            winnerSurface,
+            (
+                700 // 2 - winnerSurface.get_width() // 2,
+                700 // 2 - winnerSurface.get_height() // 2 - 21,
+            ),
+        )
+        win.blit(
+            winsSurface,
+            (
+                700 // 2 - winsSurface.get_width() // 2,
+                700 // 2 - winsSurface.get_height() // 2 + 21,
+            ),
+        )
+    for p, surface in zip(game.players, surfaces):
+        win.blit(
+            surface[1] if p.state == "dead" else surface[0],
+            (
+                895 - surface[1].get_width(),
+                50 + p.snake_id * 120 + (30 - surface[1].get_height()) // 2,
+            ),
+        )

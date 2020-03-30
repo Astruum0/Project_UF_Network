@@ -150,8 +150,8 @@ class Pong_game:
         self.p2.draw(win)
         self.ball.draw(win)
 
-        win.blit(Game.numbers[self.score[0]], (351, 20))
-        win.blit(Game.numbers[self.score[1]], (410, 20))
+        win.blit(Pong_game.numbers[self.score[0]], (351, 20))
+        win.blit(Pong_game.numbers[self.score[1]], (410, 20))
 
     def reset(self):
         self.ball.reset
