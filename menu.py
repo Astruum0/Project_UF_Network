@@ -1,5 +1,7 @@
 import pygame
 from pygame.locals import QUIT, MOUSEBUTTONDOWN, MOUSEMOTION
+from pseudo_type import enterPseudo
+from pong_client import pong_client
 
 win = pygame.display.set_mode((600, 600))
 pygame.display.set_caption("PyNetGames")
@@ -13,11 +15,20 @@ clock = pygame.time.Clock()
 btn_width = 487
 btn_height = 71
 
+pseudo = enterPseudo()
+
+pygame.font.init()
+font = pygame.font.Font("fonts/PixelOperatorMono8-Bold.ttf", 20)
+welcome_text = font.render(f"Welcome, {pseudo} !", 1, (255, 255, 255))
+
+x_hover, y_hover = (None, None)
 
 menu = True
 while menu:
     clock.tick(60)
     win.blit(bg, (0, 0))
+
+    win.blit(welcome_text, (600 / 2 - welcome_text.get_width() // 2, 15))
 
     x_mouse, y_mouse = pygame.mouse.get_pos()
     for e in pygame.event.get():
@@ -33,7 +44,7 @@ while menu:
         ):
             x_hover, y_hover = (56, 207)
             if e.type == MOUSEBUTTONDOWN and e.button == 1:
-                print("PONG")
+                pong_client(pseudo)
         elif (
             x_mouse > 56
             and x_mouse < 56 + btn_width

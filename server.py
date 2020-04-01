@@ -98,6 +98,7 @@ def online_snake(conn, p, gameId):
 
 while True:
     conn, addr = s.accept()
+    print(addr)
     game_choosen, pseudo = conn.recv(4096).decode().split(",")
     print("Connected to : ", addr)
     print(f"Looking for available {game_choosen} lobbies...")
