@@ -14,7 +14,7 @@ height = 500
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("PONG")
 
-font = pygame.font.Font("PixelOperator8.ttf", 20)
+font = pygame.font.Font("fonts/PixelOperator8.ttf", 20)
 waiting_text = font.render("Waiting for Player...", 1, (255, 255, 255), True)
 
 jeu = True

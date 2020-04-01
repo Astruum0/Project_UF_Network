@@ -2,8 +2,9 @@ import pygame
 from network_for_client import Network
 import pickle
 from snake_class import show_font, Snake
+from pseudo_type import enterPseudo
 
-pseudo = input("Type a Pseudo : ")
+pseudo = enterPseudo()
 
 
 pygame.init()
@@ -16,8 +17,8 @@ height = 700
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("SNAKE")
 
-font20 = pygame.font.Font("PixelOperator8.ttf", 20)
-font40 = pygame.font.Font("PixelOperator8.ttf", 40)
+font20 = pygame.font.Font("fonts/PixelOperator8.ttf", 20)
+font40 = pygame.font.Font("fonts/PixelOperator8.ttf", 40)
 waiting_text = font20.render("Waiting for Player...", 1, (255, 255, 255), True)
 all_surfaces = []
 
@@ -29,12 +30,12 @@ print("You are Player", player + 1)
 
 def return_surfaces(pseudo, i):
     font_size = 30
-    font = pygame.font.Font("PixelOperator8.ttf", font_size)
+    font = pygame.font.Font("fonts/PixelOperator8.ttf", font_size)
     surfacePseudo1 = font.render(pseudo, 1, Snake.colors[i], True)
     surfacePseudo2 = font.render(pseudo, 1, Snake.colors[4], True)
     while surfacePseudo1.get_width() > 180:
         font_size -= 1
-        font = pygame.font.Font("PixelOperator8.ttf", font_size)
+        font = pygame.font.Font("fonts/PixelOperator8.ttf", font_size)
         surfacePseudo1 = font.render(pseudo, 1, Snake.colors[i], True)
         surfacePseudo2 = font.render(pseudo, 1, Snake.colors[4], True)
     return (surfacePseudo1, surfacePseudo2)

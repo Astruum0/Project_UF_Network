@@ -24,7 +24,7 @@ snake_games = {}
 idCount = 0
 
 font_size = 30
-font = pygame.font.Font("PixelOperator8.ttf", font_size)
+font = pygame.font.Font("fonts/PixelOperator8.ttf", font_size)
 
 
 def online_pong(conn, p, gameId):
@@ -138,7 +138,7 @@ while True:
         surfacePseudo2 = font.render(pseudo, 1, Snake.colors[4], True)
         while surfacePseudo1.get_width() > 180:
             font_size -= 1
-            font = pygame.font.Font("PixelOperator8.ttf", font_size)
+            font = pygame.font.Font("fonts/PixelOperator8.ttf", font_size)
             surfacePseudo1 = font.render(
                 pseudo, 1, Snake.colors[snake_games[ID].players_nbr], True
             )
