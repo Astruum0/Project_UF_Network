@@ -30,12 +30,14 @@ def pong_client(pseudo):
         except:
             jeu = False
             print("Couldn't get game")
-            break
+            win = pygame.display.set_mode((600, 600))
+            return
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 jeu = False
-                pygame.quit()
+                win = pygame.display.set_mode((600, 600))
+                return
 
         if game.connected:
             move = "none"

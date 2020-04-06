@@ -8,6 +8,7 @@ from snake_class import Snake_game, Snake
 pygame.font.init()
 
 server = "192.168.1.38"
+server = "172.20.10.3"
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
