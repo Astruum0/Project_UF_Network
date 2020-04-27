@@ -38,10 +38,12 @@ def pong_client(pseudo):
                 jeu = False
                 win = pygame.display.set_mode((600, 600))
                 return
-
-        if game.connected:
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE] and game.connected and not game.started:
+            game = net.send("start")
+        if game.started:
             move = "none"
-            keys = pygame.key.get_pressed()
+
             if keys[pygame.K_UP]:
                 move = "UP"
             if keys[pygame.K_DOWN]:

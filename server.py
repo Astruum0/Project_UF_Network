@@ -7,8 +7,7 @@ from snake_class import Snake_game, Snake
 
 pygame.font.init()
 
-server = "192.168.1.38"
-server = "172.20.10.3"
+server = "192.168.0.14"
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -41,10 +40,12 @@ def online_pong(conn, p, gameId):
                 if not data:
                     break
                 else:
-                    if data != "get":
+                    if data == "start":
+                        game.start()
+                    if data != "get" and data != "start":
                         game.movePanel(p, data)
                         game.update()
-                        pong_games[gameId] = game
+                    pong_games[gameId] = game
                     conn.sendall(pickle.dumps(game))
             else:
                 break
