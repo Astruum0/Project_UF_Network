@@ -8,8 +8,8 @@ from tic_tac_toe__class import Tic_Tac_Toe_Game
 
 pygame.font.init()
 
-server = "192.168.0.44"
-port = 5555
+server = "192.168.1.38"
+port = 5556
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -97,6 +97,7 @@ def online_snake(conn, p, gameId):
         pass
     conn.close()
 
+
 def online_tic_tac_toe(conn, p, gameId):
     global idCount
     conn.send(str.encode(str(p)))
@@ -113,6 +114,7 @@ def online_tic_tac_toe(conn, p, gameId):
                     if data[0] == "pos":
                         game.Update(int(data[1]), int(data[2]), int(data[3]))
                         game = tic_tac_toe_games[gameId]
+                    tic_tac_toe_games[gameId] = game
                     conn.sendall(pickle.dumps(game))
             else:
                 break
@@ -121,7 +123,7 @@ def online_tic_tac_toe(conn, p, gameId):
 
     print("Lost connection")
     try:
-        del games[gameId]
+        del tic_tac_toe_games[gameId]
         print("Closing Game", gameId)
     except:
         pass
@@ -148,7 +150,7 @@ while True:
             p = 1
 
         start_new_thread(online_pong, (conn, p, gameId))
-        
+
     elif game_choosen == "Snake":
         game_entered = False
         ID = 0
