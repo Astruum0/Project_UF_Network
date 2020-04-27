@@ -17,7 +17,10 @@ class Network:
         # try:
         self.client.connect(self.addr)
         self.client.send(str.encode(game + "," + pseudo))
-        return self.client.recv(2048).decode()
+        if pseudo == "_":
+            return pickle.loads(self.client.recv(2048 * 4))
+        else:
+            return self.client.recv(2048).decode()
         # except:
         # pass
 

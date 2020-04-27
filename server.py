@@ -6,200 +6,207 @@ from pong_class import Pong_game
 from snake_class import Snake_game, Snake
 from tic_tac_toe__class import Tic_Tac_Toe_Game
 
-pygame.font.init()
+if __name__ == "__main__":
+    pygame.font.init()
 
-server = "192.168.1.38"
-port = 5556
+    server = "192.168.1.38"
+    port = 5556
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-try:
-    s.bind((server, port))
-except socket.error as e:
-    str(e)
-
-s.listen()
-print("Waiting for a connection, Server Started")
-pong_games = {}
-snake_games = {}
-tic_tac_toe_games = {}
-idCount = 0
-
-font_size = 30
-font = pygame.font.Font("fonts/PixelOperator8.ttf", font_size)
-
-
-def online_pong(conn, p, gameId, pseudo):
-    global idCount
-    conn.send(str.encode(str(p)))
-    while True:
-        try:
-            data = conn.recv(4096).decode()
-
-            if gameId in pong_games:
-                game = pong_games[gameId]
-
-                if not data:
-                    break
-                else:
-                    if data == "start":
-                        game.start()
-                    if data != "get" and data != "start":
-                        game.movePanel(p, data)
-                        game.update()
-                    pong_games[gameId] = game
-                    conn.sendall(pickle.dumps(game))
-            else:
-                break
-        except:
-            break
-
-    print(f"{pseudo} disconnected from Pong Game", gameId)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     try:
-        del pong_games[gameId]
-        print("Closing Game", gameId)
-    except:
-        pass
-    idCount -= 1
-    conn.close()
+        s.bind((server, port))
+    except socket.error as e:
+        str(e)
 
+    s.listen()
+    print("Waiting for a connection, Server Started")
+    pong_games = {}
+    snake_games = {}
+    tic_tac_toe_games = {}
+    idCount = 0
 
-def online_snake(conn, p, gameId, pseudo):
-    conn.send(str.encode(str(p)))
-    conn.sendall(pickle.dumps(snake_games[gameId]))
-    while True:
-        try:
-            data = conn.recv(4096).decode()
+    font_size = 30
+    font = pygame.font.Font("fonts/PixelOperator8.ttf", font_size)
 
-            if gameId in snake_games:
-                game = snake_games[gameId]
+    def online_pong(conn, p, gameId, pseudo):
+        global idCount
+        conn.send(str.encode(str(p)))
+        while True:
+            try:
+                data = conn.recv(4096).decode()
 
-                if not data:
-                    break
+                if gameId in pong_games:
+                    game = pong_games[gameId]
+
+                    if not data:
+                        break
+                    else:
+                        if data == "start":
+                            game.start()
+                        if data != "get" and data != "start":
+                            game.movePanel(p, data)
+                            game.update()
+                        pong_games[gameId] = game
+                        conn.sendall(pickle.dumps(game))
                 else:
-                    if data == "start":
-                        game.started = True
-                    if data != "get" and data != "start":
-                        game.moveSnake(p, data)
-                        game.update()
-                    snake_games[gameId] = game
-                    conn.sendall(pickle.dumps(game))
-            else:
+                    break
+            except:
                 break
-        except:
-            break
 
-    print(f"{pseudo} disconnected from Snake Game", gameId)
+        print(f"{pseudo} disconnected from Pong Game", gameId)
 
-    try:
-        del snake_games[gameId]
-        print("Closing Snake Game", gameId)
-    except:
-        pass
-    conn.close()
-
-
-def online_tic_tac_toe(conn, p, gameId, pseudo):
-    global idCount
-    conn.send(str.encode(str(p)))
-    conn.sendall(pickle.dumps(tic_tac_toe_games[gameId]))
-    while True:
         try:
-            data = conn.recv(4096).decode()
-            data = data.split(",")
-            if gameId in tic_tac_toe_games:
-                game = tic_tac_toe_games[gameId]
-                if not data:
-                    break
-                else:
-                    if data[0] == "pos":
-                        game.Update(int(data[1]), int(data[2]), int(data[3]))
-                        game = tic_tac_toe_games[gameId]
-                    tic_tac_toe_games[gameId] = game
-                    conn.sendall(pickle.dumps(game))
-            else:
-                break
+            del pong_games[gameId]
+            print("Closing Game", gameId)
         except:
-            break
+            pass
+        idCount -= 1
+        conn.close()
 
-    print(f"{pseudo} disconnected from TicTacToe Game", gameId)
-    try:
-        del tic_tac_toe_games[gameId]
-        print("Closing Game", gameId)
-    except:
-        pass
-    idCount -= 1
-    conn.close()
+    def online_snake(conn, p, gameId, pseudo):
+        conn.send(str.encode(str(p)))
+        conn.sendall(pickle.dumps(snake_games[gameId]))
+        while True:
+            try:
+                data = conn.recv(4096).decode()
 
+                if gameId in snake_games:
+                    game = snake_games[gameId]
 
-while True:
-    conn, addr = s.accept()
-    print(addr)
-    game_choosen, pseudo = conn.recv(4096).decode().split(",")
-    print("Connected to : ", addr)
-    print(f"Looking for available {game_choosen} lobbies...")
-
-    if game_choosen == "Pong":
-        idCount += 1
-        p = 0
-        gameId = (idCount - 1) // 2
-        if idCount % 2 == 1:
-            pong_games[gameId] = Pong_game(gameId)
-            print("Creating a new game...")
-            print(f"Connecting {pseudo} to Tic Tac Toe Game {gameId} ...")
-        else:
-            print(f"Connecting {pseudo} to Pong Game {gameId} ...")
-            pong_games[gameId].connected = True
-            p = 1
-
-        start_new_thread(online_pong, (conn, p, gameId, pseudo))
-
-    elif game_choosen == "Snake":
-        game_entered = False
-        ID = 0
-        for gameId in snake_games:
-            if snake_games[gameId].players_nbr <= 3 and not snake_games[gameId].started:
-                print(f"Connecting {pseudo} to Snake Game {gameId} ...")
-
-                ID = gameId
-                game_entered = True
-                break
-        if not game_entered:
-            for id_ in range(100):
-                if not id_ in snake_games:
-                    snake_games[id_] = Snake_game(id_)
-                    ID = id_
+                    if not data:
+                        break
+                    else:
+                        if data == "start":
+                            game.started = True
+                        if data != "get" and data != "start":
+                            game.moveSnake(p, data)
+                            game.update()
+                        snake_games[gameId] = game
+                        conn.sendall(pickle.dumps(game))
+                else:
                     break
+            except:
+                break
 
-        surfacePseudo1 = font.render(
-            pseudo, 1, Snake.colors[snake_games[ID].players_nbr], True
-        )
-        surfacePseudo2 = font.render(pseudo, 1, Snake.colors[4], True)
-        while surfacePseudo1.get_width() > 180:
-            font_size -= 1
-            font = pygame.font.Font("fonts/PixelOperator8.ttf", font_size)
+        print(f"{pseudo} disconnected from Snake Game", gameId)
+
+        try:
+            del snake_games[gameId]
+            print("Closing Snake Game", gameId)
+        except:
+            pass
+        conn.close()
+
+    def online_tic_tac_toe(conn, p, gameId, pseudo):
+        global idCount
+        conn.send(str.encode(str(p)))
+        conn.sendall(pickle.dumps(tic_tac_toe_games[gameId]))
+        while True:
+            try:
+                data = conn.recv(4096).decode()
+                data = data.split(",")
+                if gameId in tic_tac_toe_games:
+                    game = tic_tac_toe_games[gameId]
+                    if not data:
+                        break
+                    else:
+                        if data[0] == "pos":
+                            game.Update(int(data[1]), int(data[2]), int(data[3]))
+                            game = tic_tac_toe_games[gameId]
+                        tic_tac_toe_games[gameId] = game
+                        conn.sendall(pickle.dumps(game))
+                else:
+                    break
+            except:
+                break
+
+        print(f"{pseudo} disconnected from TicTacToe Game", gameId)
+        try:
+            del tic_tac_toe_games[gameId]
+            print("Closing Game", gameId)
+        except:
+            pass
+        idCount -= 1
+        conn.close()
+
+    while True:
+        conn, addr = s.accept()
+        game_choosen, pseudo = conn.recv(4096).decode().split(",")
+        if pseudo == "_":
+            if game_choosen == "Pong":
+                conn.sendall(pickle.dumps(pong_games))
+            elif game_choosen == "Snake":
+                conn.sendall(pickle.dumps(snake_games))
+            elif game_choosen == "Tic_Tac_Toe":
+                conn.sendall(pickle.dumps(tic_tac_toe_games))
+            continue
+        print(f"Connected to : {addr} as {pseudo}")
+        print(f"Looking for available {game_choosen} lobbies...")
+
+        if game_choosen == "Pong":
+            idCount += 1
+            p = 0
+            gameId = (idCount - 1) // 2
+            if idCount % 2 == 1:
+                pong_games[gameId] = Pong_game(gameId)
+                print("Creating a new game...")
+                print(f"Connecting {pseudo} to TicTacToe Game {gameId} ...")
+            else:
+                print(f"Connecting {pseudo} to Pong Game {gameId} ...")
+                pong_games[gameId].connected = True
+                p = 1
+
+            start_new_thread(online_pong, (conn, p, gameId, pseudo))
+
+        elif game_choosen == "Snake":
+            game_entered = False
+            ID = 0
+            for gameId in snake_games:
+                if (
+                    snake_games[gameId].players_nbr <= 3
+                    and not snake_games[gameId].started
+                ):
+                    print(f"Connecting {pseudo} to Snake Game {gameId} ...")
+
+                    ID = gameId
+                    game_entered = True
+                    break
+            if not game_entered:
+                for id_ in range(100):
+                    if not id_ in snake_games:
+                        snake_games[id_] = Snake_game(id_)
+                        ID = id_
+                        break
+
             surfacePseudo1 = font.render(
                 pseudo, 1, Snake.colors[snake_games[ID].players_nbr], True
             )
             surfacePseudo2 = font.render(pseudo, 1, Snake.colors[4], True)
+            while surfacePseudo1.get_width() > 180:
+                font_size -= 1
+                font = pygame.font.Font("fonts/PixelOperator8.ttf", font_size)
+                surfacePseudo1 = font.render(
+                    pseudo, 1, Snake.colors[snake_games[ID].players_nbr], True
+                )
+                surfacePseudo2 = font.render(pseudo, 1, Snake.colors[4], True)
 
-        snake_games[ID].newPlayer(pseudo)
-        start_new_thread(
-            online_snake, (conn, snake_games[ID].players_nbr - 1, ID, pseudo)
-        )
+            snake_games[ID].newPlayer(pseudo)
+            start_new_thread(
+                online_snake, (conn, snake_games[ID].players_nbr - 1, ID, pseudo)
+            )
 
-    elif game_choosen == "Tic_Tac_Toe":
-        idCount += 1
-        p = 0
-        gameId = (idCount - 1) // 2
-        if idCount % 2 == 1:
-            tic_tac_toe_games[gameId] = Tic_Tac_Toe_Game(gameId)
-            print("Creating a new game...")
-            print(f"Connecting {pseudo} to Tic Tac Toe Game {gameId} ...")
-        else:
-            print(f"Connecting {pseudo} to Tic Tac Toe Game {gameId} ...")
-            tic_tac_toe_games[gameId].connected = True
-            p = 1
+        elif game_choosen == "Tic_Tac_Toe":
+            idCount += 1
+            p = 0
+            gameId = (idCount - 1) // 2
+            if idCount % 2 == 1:
+                tic_tac_toe_games[gameId] = Tic_Tac_Toe_Game(gameId)
+                print("Creating a new game...")
+                print(f"Connecting {pseudo} to Tic Tac Toe Game {gameId} ...")
+            else:
+                print(f"Connecting {pseudo} to Tic Tac Toe Game {gameId} ...")
+                tic_tac_toe_games[gameId].connected = True
+                p = 1
 
-        start_new_thread(online_tic_tac_toe, (conn, p, gameId, pseudo))
+            start_new_thread(online_tic_tac_toe, (conn, p, gameId, pseudo))
