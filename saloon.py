@@ -11,7 +11,7 @@ def returnID(y_pos):
 
 
 def show_saloon(game, pseudo):
-    net = Network(game, "_")
+    net = Network(game, "_", "")
     games = net.getP()
 
     listgames = []

@@ -3,7 +3,7 @@ from network_for_client import Network
 import pygame
 
 
-def tic_tac_toe_client(pseudo):
+def tic_tac_toe_client(pseudo, id_):
     pygame.init()
     width = 616
     height = 700
@@ -19,7 +19,7 @@ def tic_tac_toe_client(pseudo):
     end = False
     winner = 0
 
-    net = Network("Tic_Tac_Toe", pseudo)
+    net = Network("Tic_Tac_Toe", pseudo, id_)
     player = int(net.getP())
     if player + 1 == 1:
         number_player = 1

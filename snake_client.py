@@ -5,7 +5,7 @@ from snake_class import show_font, Snake
 from pseudo_type import enterPseudo
 
 
-def snake_client(pseudo):
+def snake_client(pseudo, id_):
     pygame.init()
     pygame.font.init()
     clock = pygame.time.Clock()
@@ -21,7 +21,7 @@ def snake_client(pseudo):
     all_surfaces = []
 
     jeu = True
-    net = Network("Snake", pseudo)
+    net = Network("Snake", pseudo, id_)
     player = int(net.getP())
     print("You are Player", player + 1)
 

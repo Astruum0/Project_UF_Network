@@ -3,7 +3,7 @@ from network_for_client import Network
 import pickle
 
 
-def pong_client(pseudo):
+def pong_client(pseudo, id_):
     pygame.init()
 
     clock = pygame.time.Clock()
@@ -18,7 +18,7 @@ def pong_client(pseudo):
     waiting_text = font.render("Waiting for Player...", 1, (255, 255, 255), True)
 
     jeu = True
-    net = Network("Pong", pseudo)
+    net = Network("Pong", pseudo, id_)
     player = int(net.getP())
     print("You are Player", player + 1)
 

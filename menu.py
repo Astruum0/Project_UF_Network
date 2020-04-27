@@ -4,6 +4,7 @@ from pseudo_type import enterPseudo
 from pong_client import pong_client
 from snake_client import snake_client
 from tic_tac_toe_client import tic_tac_toe_client
+from saloon import show_saloon
 
 win = pygame.display.set_mode((600, 600))
 pygame.display.set_caption("PyNetGames")
@@ -46,7 +47,7 @@ while menu:
         ):
             x_hover, y_hover = (56, 207)
             if e.type == MOUSEBUTTONDOWN and e.button == 1:
-                pong_client(pseudo)
+                show_saloon("Pong", pseudo)
         elif (
             x_mouse > 56
             and x_mouse < 56 + btn_width
@@ -55,7 +56,7 @@ while menu:
         ):
             x_hover, y_hover = (56, 292)
             if e.type == MOUSEBUTTONDOWN and e.button == 1:
-                tic_tac_toe_client(pseudo)
+                show_saloon("Tic_Tac_Toe", pseudo)
         elif (
             x_mouse > 56
             and x_mouse < 56 + btn_width
@@ -64,7 +65,7 @@ while menu:
         ):
             x_hover, y_hover = (56, 377)
             if e.type == MOUSEBUTTONDOWN and e.button == 1:
-                snake_client(pseudo)
+                show_saloon("Snake", pseudo)
         elif (
             x_mouse > 56
             and x_mouse < 56 + btn_width
