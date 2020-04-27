@@ -4,11 +4,12 @@ import pickle
 import pygame
 from pong_class import Pong_game
 from snake_class import Snake_game, Snake
+from tic_tac_toe__class import Tic_Tac_Toe_Game
 
 pygame.font.init()
 
-server = "192.168.0.14"
-port = 5555
+server = "192.168.1.38"
+port = 5556
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -21,6 +22,7 @@ s.listen()
 print("Waiting for a connection, Server Started")
 pong_games = {}
 snake_games = {}
+tic_tac_toe_games = {}
 idCount = 0
 
 font_size = 30
@@ -98,6 +100,39 @@ def online_snake(conn, p, gameId):
     conn.close()
 
 
+def online_tic_tac_toe(conn, p, gameId):
+    global idCount
+    conn.send(str.encode(str(p)))
+    conn.sendall(pickle.dumps(tic_tac_toe_games[gameId]))
+    while True:
+        try:
+            data = conn.recv(4096).decode()
+            data = data.split(",")
+            if gameId in tic_tac_toe_games:
+                game = tic_tac_toe_games[gameId]
+                if not data:
+                    break
+                else:
+                    if data[0] == "pos":
+                        game.Update(int(data[1]), int(data[2]), int(data[3]))
+                        game = tic_tac_toe_games[gameId]
+                    tic_tac_toe_games[gameId] = game
+                    conn.sendall(pickle.dumps(game))
+            else:
+                break
+        except:
+            break
+
+    print("Lost connection")
+    try:
+        del tic_tac_toe_games[gameId]
+        print("Closing Game", gameId)
+    except:
+        pass
+    idCount -= 1
+    conn.close()
+
+
 while True:
     conn, addr = s.accept()
     print(addr)
@@ -118,6 +153,7 @@ while True:
             p = 1
 
         start_new_thread(online_pong, (conn, p, gameId))
+
     elif game_choosen == "Snake":
         game_entered = False
         ID = 0
@@ -149,3 +185,17 @@ while True:
 
         snake_games[ID].newPlayer(pseudo)
         start_new_thread(online_snake, (conn, snake_games[ID].players_nbr - 1, ID))
+
+    elif game_choosen == "Tic_Tac_Toe":
+        idCount += 1
+        p = 0
+        gameId = (idCount - 1) // 2
+        if idCount % 2 == 1:
+            tic_tac_toe_games[gameId] = Tic_Tac_Toe_Game(gameId)
+            print("Creating a new game...")
+        else:
+            print(f"Connecting to Tic Tac Toe Game {gameId} ...")
+            tic_tac_toe_games[gameId].connected = True
+            p = 1
+
+        start_new_thread(online_tic_tac_toe, (conn, p, gameId))
