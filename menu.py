@@ -3,6 +3,7 @@ from pygame.locals import QUIT, MOUSEBUTTONDOWN, MOUSEMOTION
 from pseudo_type import enterPseudo
 from pong_client import pong_client
 from snake_client import snake_client
+from tic_tac_toe_client import tic_tac_toe_client
 
 win = pygame.display.set_mode((600, 600))
 pygame.display.set_caption("PyNetGames")
@@ -54,7 +55,7 @@ while menu:
         ):
             x_hover, y_hover = (56, 292)
             if e.type == MOUSEBUTTONDOWN and e.button == 1:
-                print("TicTacToe")
+                tic_tac_toe_client(pseudo)
         elif (
             x_mouse > 56
             and x_mouse < 56 + btn_width
