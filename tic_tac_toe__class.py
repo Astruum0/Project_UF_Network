@@ -1,33 +1,35 @@
 from random import randint
 import pygame
 
-X = pygame.image.load('sprites_tic_tac_toe/x.png')
-O = pygame.image.load('sprites_tic_tac_toe/o.png')
+X = pygame.image.load("sprites_tic_tac_toe/x.png")
+O = pygame.image.load("sprites_tic_tac_toe/o.png")
 
-class Board():
+
+class Board:
     def __init__(self):
         self.board = [[0] * 3 for i in range(3)]
         self.end = False
         self.winner = 0
 
     def Show(self, win):
-        global X,O
-        dico = {0 : [80,200],
-                1 : [250,200],
-                2 : [420,200],
-                3 : [80,380],
-                4 : [250,380],
-                5 : [420,380],
-                6 : [80,550],
-                7 : [250,550],
-                8 : [420,550],
-                }
+        global X, O
+        dico = {
+            0: [80, 200],
+            1: [250, 200],
+            2: [420, 200],
+            3: [80, 380],
+            4: [250, 380],
+            5: [420, 380],
+            6: [80, 550],
+            7: [250, 550],
+            8: [420, 550],
+        }
         for i, row in enumerate(self.board):
             for j, case in enumerate(row):
                 if case == -1:
-                    win.blit(O, dico[3*i+j])
+                    win.blit(O, dico[3 * i + j])
                 elif case == 1:
-                    win.blit(X, dico[3*i+j])
+                    win.blit(X, dico[3 * i + j])
 
     def Place(self, x, y, player):
         self.board[x][y] = player
@@ -48,7 +50,7 @@ class Board():
                 if cell == 0:
                     cells.append([x, y])
         return len(cells)
-    
+
     def Win(self):
         board = self.board
         win_state = [
@@ -66,6 +68,7 @@ class Board():
         if [1, 1, 1] in win_state:
             self.end, self.winner = True, 1
 
+
 class Tic_Tac_Toe_Game:
     def __init__(self, id):
         self.id = id
@@ -76,7 +79,8 @@ class Tic_Tac_Toe_Game:
     def Update(self, x, y, number_player):
         if self.board.Check(x, y):
             self.board.Place(x, y, number_player)
-            self.can_play = [not(i) for i in self.can_play]
+            self.can_play = [not (i) for i in self.can_play]
+        # self.board.Win()
 
     def Show(self, win):
         self.board.Show(win)
@@ -84,4 +88,3 @@ class Tic_Tac_Toe_Game:
     def Reset(self, id):
         self.id = id
         self.board = Board()
-    

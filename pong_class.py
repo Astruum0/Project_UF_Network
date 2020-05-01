@@ -118,6 +118,7 @@ class Pong_game:
         self.score = [0, 0]
 
         self.connected = False
+        self.started = False
 
     def movePanel(self, p, move):
         if p == 0 and move == "UP" and not self.p1.wallCollideUp():
@@ -153,8 +154,12 @@ class Pong_game:
         win.blit(Pong_game.numbers[self.score[0]], (351, 20))
         win.blit(Pong_game.numbers[self.score[1]], (410, 20))
 
+    def start(self):
+        self.started = True
+
     def reset(self):
         self.ball.reset
         self.p1.y = 200
         self.p2.y = 200
         self.score = [0, 0]
+        self.started = False
