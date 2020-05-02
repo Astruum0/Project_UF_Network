@@ -2,7 +2,6 @@ import pygame
 from network_for_client import Network
 import pickle
 from snake_class import show_font, Snake
-from pseudo_type import enterPseudo
 
 
 def snake_client(pseudo, id_):

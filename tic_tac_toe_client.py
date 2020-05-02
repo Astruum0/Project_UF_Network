@@ -44,7 +44,7 @@ def tic_tac_toe_client(pseudo, id_):
         if game.connected:
             can_Play = game.can_play[player]
             for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN and can_Play == True:
+                if event.type == pygame.MOUSEBUTTONUP and can_Play == True:
 
                     mouse_x, mouse_y = pygame.mouse.get_pos()
                     x, y = -1, -1
@@ -56,7 +56,6 @@ def tic_tac_toe_client(pseudo, id_):
                     for i in range(0, 3):
                         if (i * 170) + 200 < mouse_y < (i * 170) + 330:
                             x = i
-                    print(f"pos,{x},{y},{number_player}")
                     game = net.send(f"pos,{x},{y},{number_player}")
             game.Show(win)
             win.blit(
