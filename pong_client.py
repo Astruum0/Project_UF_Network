@@ -18,7 +18,9 @@ def pong_client(pseudo, id_):
     waiting_text = font.render("Waiting for Player...", 1, (255, 255, 255), True)
 
     jeu = True
-    net = Network("Pong", pseudo, id_)
+    net = Network(
+        "Pong", pseudo, id_ if id_ in ["create", "auto"] else str(int(id_) - 1)
+    )
     player = int(net.getP())
     print("You are Player", player + 1)
 

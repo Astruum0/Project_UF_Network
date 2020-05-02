@@ -8,7 +8,7 @@ from tic_tac_toe__class import Tic_Tac_Toe_Game
 
 pygame.font.init()
 
-server = "192.168.1.38"
+server = "192.168.0.14"
 port = 5556
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -149,19 +149,31 @@ while True:
     print(f"Looking for available {game_choosen} lobbies...")
 
     if game_choosen == "Pong":
-        idCount += 1
-        p = 0
-        gameId = (idCount - 1) // 2
-        if idCount % 2 == 1:
-            pong_games[gameId] = Pong_game(gameId)
-            print("Creating a new game...")
-            print(f"Connecting {pseudo} to TicTacToe Game {gameId} ...")
-        else:
-            print(f"Connecting {pseudo} to Pong Game {gameId} ...")
-            pong_games[gameId].connected = True
+        game_entered = False
+        ID = 0
+        try:
+            ID = int(choosed_id)
+            pong_games[ID].connected = True
             p = 1
+        except ValueError:
+            for gameId in pong_games:
+                if not pong_games[gameId].connected and choosed_id != "create":
+                    print(f"Connecting {pseudo} to Pong Game {gameId} ...")
 
-        start_new_thread(online_pong, (conn, p, gameId, pseudo))
+                    ID = gameId
+                    game_entered = True
+                    p = 1
+                    pong_games[ID].connected = True
+                    break
+            if not game_entered or choosed_id == "create":
+                for id_ in range(100):
+                    if not id_ in pong_games:
+                        pong_games[id_] = Pong_game(id_)
+                        ID = id_
+                        p = 0
+                        break
+
+        start_new_thread(online_pong, (conn, p, ID, pseudo))
 
     elif game_choosen == "Snake":
         game_entered = False
@@ -205,16 +217,28 @@ while True:
         )
 
     elif game_choosen == "Tic_Tac_Toe":
-        idCount += 1
-        p = 0
-        gameId = (idCount - 1) // 2
-        if idCount % 2 == 1:
-            tic_tac_toe_games[gameId] = Tic_Tac_Toe_Game(gameId)
-            print("Creating a new game...")
-            print(f"Connecting {pseudo} to Tic Tac Toe Game {gameId} ...")
-        else:
-            print(f"Connecting {pseudo} to Tic Tac Toe Game {gameId} ...")
-            tic_tac_toe_games[gameId].connected = True
+        game_entered = False
+        ID = 0
+        if type(choosed_id) == int:
+            ID = choosed_id
+            tic_tac_toe_games[ID].connected = True
             p = 1
+        else:
+            for gameId in tic_tac_toe_games:
+                if not tic_tac_toe_games[gameId].connected and choosed_id != "create":
+                    print(f"Connecting {pseudo} to TicTacToe Game {gameId} ...")
+
+                    ID = gameId
+                    tic_tac_toe_games[ID].connected = True
+                    game_entered = True
+                    p = 1
+                    break
+            if not game_entered or choosed_id == "create":
+                for id_ in range(100):
+                    if not id_ in tic_tac_toe_games:
+                        tic_tac_toe_games[id_] = Tic_Tac_Toe_Game(id_)
+                        ID = id_
+                        p = 0
+                        break
 
         start_new_thread(online_tic_tac_toe, (conn, p, gameId, pseudo))

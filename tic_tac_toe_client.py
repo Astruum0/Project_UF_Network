@@ -13,11 +13,13 @@ def tic_tac_toe_client(pseudo, id_):
 
     font20 = pygame.font.Font("fonts/PixelOperator8.ttf", 20)
     waiting_text = font20.render("Waiting for Player...", 1, (0, 0, 0), True)
+    your_turn = font20.render("Your turn", 1, (0, 0, 0), True)
+    other_turn = font20.render("Opponent turn", 1, (0, 0, 0), True)
 
     run = True
     can_Play = True
-    end = False
-    winner = 0
+    # end = False
+    # winner = 0
 
     net = Network("Tic_Tac_Toe", pseudo, id_)
     player = int(net.getP())
@@ -42,7 +44,7 @@ def tic_tac_toe_client(pseudo, id_):
         if game.connected:
             can_Play = game.can_play[player]
             for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONUP and can_Play == True:
+                if event.type == pygame.MOUSEBUTTONDOWN and can_Play == True:
 
                     mouse_x, mouse_y = pygame.mouse.get_pos()
                     x, y = -1, -1
@@ -54,8 +56,21 @@ def tic_tac_toe_client(pseudo, id_):
                     for i in range(0, 3):
                         if (i * 170) + 200 < mouse_y < (i * 170) + 330:
                             x = i
+                    print(f"pos,{x},{y},{number_player}")
                     game = net.send(f"pos,{x},{y},{number_player}")
             game.Show(win)
+            win.blit(
+                your_turn if can_Play else other_turn,
+                (
+                    700 / 2 - your_turn.get_width() / 2
+                    if can_Play
+                    else 700 / 2 - other_turn.get_width() / 2,
+                    700 / 2 - other_turn.get_height() / 2 - 300
+                    if can_Play
+                    else 700 / 2 - other_turn.get_height() / 2 - 300,
+                ),
+            )
+
         else:
             win.blit(
                 waiting_text,
