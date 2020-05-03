@@ -1,5 +1,6 @@
 import socket
 from _thread import start_new_thread
+import logging
 import pickle
 import pygame
 from pong_class import Pong_game
@@ -11,6 +12,17 @@ pygame.font.init()
 server = "192.168.0.14"
 port = 5556
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter("[%(asctime)s] %(message)s")
+file_handler = logging.FileHandler("server_logs.log")
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(formatter)
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
@@ -19,7 +31,7 @@ except socket.error as e:
     str(e)
 
 s.listen()
-print("Waiting for a connection, Server Started")
+logger.info(f"Server Started, adress is {server}:{port}")
 pong_games = {}
 snake_games = {}
 tic_tac_toe_games = {}
@@ -54,11 +66,11 @@ def online_pong(conn, p, gameId, pseudo):
         except:
             break
 
-    print(f"{pseudo} disconnected from Pong Game", gameId)
+    logger.info(f"{pseudo} disconnected from Pong Game {gameId}")
 
     try:
         del pong_games[gameId]
-        print("Closing Game", gameId)
+        logger.info(f"Closing Game {gameId}")
     except:
         pass
     idCount -= 1
@@ -90,11 +102,11 @@ def online_snake(conn, p, gameId, pseudo):
         except:
             break
 
-    print(f"{pseudo} disconnected from Snake Game", gameId)
+    logger.info(f"{pseudo} disconnected from Snake Game {gameId}")
 
     try:
         del snake_games[gameId]
-        print("Closing Snake Game", gameId)
+        logger.info(f"Closing Snake Game {gameId}")
     except:
         pass
     conn.close()
@@ -123,10 +135,10 @@ def online_tic_tac_toe(conn, p, gameId, pseudo):
         except:
             break
 
-    print(f"{pseudo} disconnected from TicTacToe Game", gameId)
+    logger.info(f"{pseudo} disconnected from TicTacToe Game {gameId}")
     try:
         del tic_tac_toe_games[gameId]
-        print("Closing Game", gameId)
+        logger.info(f"Closing Game {gameId}")
     except:
         pass
     idCount -= 1
@@ -134,7 +146,11 @@ def online_tic_tac_toe(conn, p, gameId, pseudo):
 
 
 while True:
-    conn, addr = s.accept()
+    try:
+        conn, addr = s.accept()
+    except:
+        logger.info("Closed server")
+        break
     game_choosen, pseudo, choosed_id = conn.recv(4096).decode().split(",")
     if pseudo == "_":
         if game_choosen == "Pong":
@@ -145,9 +161,6 @@ while True:
             conn.sendall(pickle.dumps(tic_tac_toe_games))
         continue
 
-    print(f"Connected to : {addr} as {pseudo}")
-    print(f"Looking for available {game_choosen} lobbies...")
-
     if game_choosen == "Pong":
         game_entered = False
         ID = 0
@@ -155,15 +168,20 @@ while True:
             ID = int(choosed_id)
             pong_games[ID].connected = True
             p = 1
+            logger.info(
+                f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Pong Game {ID} ..."
+            )
         except ValueError:
             for gameId in pong_games:
                 if not pong_games[gameId].connected and choosed_id != "create":
-                    print(f"Connecting {pseudo} to Pong Game {gameId} ...")
-
                     ID = gameId
                     game_entered = True
                     p = 1
                     pong_games[ID].connected = True
+
+                    logger.info(
+                        f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Pong Game {ID} ..."
+                    )
                     break
             if not game_entered or choosed_id == "create":
                 for id_ in range(100):
@@ -171,6 +189,9 @@ while True:
                         pong_games[id_] = Pong_game(id_)
                         ID = id_
                         p = 0
+                        logger.info(
+                            f"{pseudo} {str(addr).replace(', ', ':')} created Pong Game {ID}"
+                        )
                         break
 
         start_new_thread(online_pong, (conn, p, ID, pseudo))
@@ -178,25 +199,32 @@ while True:
     elif game_choosen == "Snake":
         game_entered = False
         ID = 0
-        if type(choosed_id) == int:
-            ID = choosed_id
-        else:
+        try:
+            ID = int(choosed_id)
+            logger.info(
+                f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Snake Game {ID} ..."
+            )
+        except:
             for gameId in snake_games:
                 if (
                     snake_games[gameId].players_nbr <= 3
                     and not snake_games[gameId].started
                     and choosed_id != "create"
                 ):
-                    print(f"Connecting {pseudo} to Snake Game {gameId} ...")
-
                     ID = gameId
                     game_entered = True
+                    logger.info(
+                        f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Snake Game {ID}"
+                    )
                     break
             if not game_entered or choosed_id == "create":
                 for id_ in range(100):
                     if not id_ in snake_games:
                         snake_games[id_] = Snake_game(id_)
                         ID = id_
+                        logger.info(
+                            f"{pseudo} {str(addr).replace(', ', ':')} created Snake Game {ID} ..."
+                        )
                         break
 
         surfacePseudo1 = font.render(
@@ -223,14 +251,19 @@ while True:
             ID = choosed_id
             tic_tac_toe_games[ID].connected = True
             p = 1
+            logger.info(
+                f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Snake Game {ID}"
+            )
         else:
             for gameId in tic_tac_toe_games:
                 if not tic_tac_toe_games[gameId].connected and choosed_id != "create":
-                    print(f"Connecting {pseudo} to TicTacToe Game {gameId} ...")
 
                     ID = gameId
                     tic_tac_toe_games[ID].connected = True
                     game_entered = True
+                    logger.info(
+                        f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Snake Game {ID}"
+                    )
                     p = 1
                     break
             if not game_entered or choosed_id == "create":
@@ -239,6 +272,9 @@ while True:
                         tic_tac_toe_games[id_] = Tic_Tac_Toe_Game(id_)
                         ID = id_
                         p = 0
+                        logger.info(
+                            f"{pseudo} {str(addr).replace(', ', ':')} created TicTacToe Game {ID} ..."
+                        )
                         break
 
         start_new_thread(online_tic_tac_toe, (conn, p, gameId, pseudo))
