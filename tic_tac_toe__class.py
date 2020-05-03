@@ -75,6 +75,7 @@ class Tic_Tac_Toe_Game:
         self.board = Board()
         self.can_play = [True, False]
         self.connected = False
+        self.list_pseudo = []
 
     def Update(self, x, y, number_player):
         if self.board.Check(x, y):

@@ -30,6 +30,7 @@ def connected(database):
     window.title("PyNetGames")
     window.geometry(f"{width}x{width}")
     window.configure(background="black")
+    
     def login():
         global pseudo
         l_username = username.get()
@@ -62,13 +63,16 @@ def connected(database):
             launch(window)
 
     def register():
+        global pseudo
         r_user_name = r_username.get()
         r_password1 = r_password.get()
         r_password2 = r_conf_password.get()
         if r_user_name and r_password1 and r_password2:
-            if not valid_username(r_user_name):
+            if r_valid_username(r_user_name):
                 if valid_password(r_password1, r_password2):
                     inscription(r_user_name, r_password1)
+                    pseudo = r_user_name
+                    window.destroy()
             else:
                 error_register.config(text="Ce nom est déjà pris", background="grey")
         else:
@@ -84,19 +88,30 @@ def connected(database):
             error_register.config(text="Les deux mots de passe\nne correspondent pas", background="grey")
         return False
 
-    def inscription(user_name, user_password):
+    def r_valid_username(username):
         try:
-            SQL_INSERT = "INSERT INTO {table}({columns}) VALUES ({placeholders})"
-            colonne = ("user_name", "user_password")
-            table = "users"
-            query = SQL_INSERT.format(
-                columns=",".join(colonne),
-                table=table,
-                placeholders=",".join(["%s" for i in range(len(colonne))]),
-            )
-            database.post(query, (user_name, user_password,),)
+            users = database.get("SELECT user_name FROM users")
+            try:
+                users = [user[0].replace(",","") for user in users]
+                return not username in users
+            except:
+                return True
         except:
             launch(window)
+
+    def inscription(user_name, user_password):
+        #try:
+        SQL_INSERT = "INSERT INTO {table}({columns}) VALUES ({placeholders})"
+        colonne = ("user_name", "user_password", "win_snake", "win_ttt", "win_pong")
+        table = "users"
+        query = SQL_INSERT.format(
+            columns=",".join(colonne),
+            table=table,
+            placeholders=",".join(["%s" for i in range(len(colonne))]),
+        )
+        database.post(query, (user_name, user_password, 0, 0, 0),)
+        #except:
+        #    launch(window)
 
     error_login = Label(window, font=("PixelOperator8",15), text="", background ="black")
     error_login.place(x=50, y=300)

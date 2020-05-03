@@ -3,7 +3,16 @@ from network_for_client import Network
 import pickle
 from snake_class import show_font, Snake
 
-
+def win_increase(gagnant):
+    connection = mysql.connector.connect(host="mysql-sql-crackito.alwaysdata.net",
+                                     database="sql-crackito_projetreseau",
+                                     user="204318",
+                                     password="20102001Aa")
+    cursor = connection.cursor()
+    sql_update_query = f"update users set win_ttt = win_snake + 1 where user_name = '{gagnant}'"
+    cursor.execute(sql_update_query)
+    connection.commit()
+    
 def snake_client(pseudo, id_):
     pygame.init()
     pygame.font.init()

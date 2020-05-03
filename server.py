@@ -8,7 +8,7 @@ from tic_tac_toe__class import Tic_Tac_Toe_Game
 
 pygame.font.init()
 
-server = "192.168.0.14"
+server = "192.168.0.44"
 port = 5556
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -44,6 +44,7 @@ def online_pong(conn, p, gameId, pseudo):
                 else:
                     if data == "start":
                         game.start()
+                        game.winner = None
                     if data != "get" and data != "start":
                         game.movePanel(p, data)
                         game.update()
@@ -164,6 +165,7 @@ while True:
                     game_entered = True
                     p = 1
                     pong_games[ID].connected = True
+                    pong_games[ID].list_pseudo.append(pseudo)
                     break
             if not game_entered or choosed_id == "create":
                 for id_ in range(100):
@@ -172,7 +174,6 @@ while True:
                         ID = id_
                         p = 0
                         break
-
         start_new_thread(online_pong, (conn, p, ID, pseudo))
 
     elif game_choosen == "Snake":
@@ -240,5 +241,5 @@ while True:
                         ID = id_
                         p = 0
                         break
-
-        start_new_thread(online_tic_tac_toe, (conn, p, gameId, pseudo))
+        tic_tac_toe_games[ID].list_pseudo.append(pseudo)
+        start_new_thread(online_tic_tac_toe, (conn, p, ID, pseudo))

@@ -116,7 +116,7 @@ class Pong_game:
         self.p2 = Panel(760, 200)
         self.ball = Ball()
         self.score = [0, 0]
-
+        self.winner = None
         self.connected = False
         self.started = False
 
@@ -142,15 +142,15 @@ class Pong_game:
         self.updateScore()
         self.ball.checkCollision(self.p1, self.p2)
         self.ball.update()
-
         if 7 in self.score:
+            self.winner = self.score.index(7)
             self.reset()
 
     def show(self, win):
         self.p1.draw(win)
         self.p2.draw(win)
         self.ball.draw(win)
-
+        
         win.blit(Pong_game.numbers[self.score[0]], (351, 20))
         win.blit(Pong_game.numbers[self.score[1]], (410, 20))
 
