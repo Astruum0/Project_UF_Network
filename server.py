@@ -8,7 +8,7 @@ from tic_tac_toe__class import Tic_Tac_Toe_Game
 
 pygame.font.init()
 
-server = "192.168.0.44"
+server = "192.168.0.14"
 port = 5556
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
