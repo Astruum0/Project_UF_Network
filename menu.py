@@ -5,6 +5,7 @@ from pong_client import pong_client
 from snake_client import snake_client
 from tic_tac_toe_client import tic_tac_toe_client
 from saloon import show_saloon
+from stat_player import stats, leaderboard
 
 if pseudo != None:
     bg = pygame.image.load("menu_sprites/menu.png")
@@ -72,7 +73,7 @@ if pseudo != None:
             ):
                 x_hover, y_hover = (56, 462)
                 if e.type == MOUSEBUTTONDOWN and e.button == 1:
-                    print("Uno")
+                    stats(pseudo)
             else:
                 x_hover, y_hover = (None, None)
 
