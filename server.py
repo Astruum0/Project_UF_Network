@@ -1,8 +1,10 @@
 import socket
 from _thread import start_new_thread
+import ipaddress
 import logging
 import pickle
 import pygame
+import sys
 from pong_class import Pong_game
 from snake_class import Snake_game, Snake
 from tic_tac_toe__class import Tic_Tac_Toe_Game
@@ -11,6 +13,22 @@ pygame.font.init()
 
 server = "192.168.0.44"
 port = 5556
+
+for i, arg in enumerate(sys.argv):
+    if arg == "-ip":
+        try:
+            server = sys.argv[i + 1]
+            ipaddress.ip_address(server)
+        except:
+            sys.exit("Invalid argument for ip")
+
+    if arg == "-p":
+        try:
+            port = int(sys.argv[i + 1])
+        except:
+            sys.exit("Invalid argument for host")
+
+print(server, port)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

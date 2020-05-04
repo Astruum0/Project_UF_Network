@@ -1,2 +1,14 @@
 [2020-05-03 19:31:42,121] Server Started, adress is 192.168.0.14:5556
 [2020-05-03 19:31:45,517] Closed server
+[2020-05-04 14:05:56,555] Server Started, adress is 192.168.0.44:5556
+[2020-05-04 14:06:40,097] Server Started, adress is 192.168.0.20:5556
+[2020-05-04 14:06:46,618] Closed server
+[2020-05-04 14:06:53,532] Server Started, adress is 192.168.0.20:5555
+[2020-05-04 14:06:59,218] Closed server
+[2020-05-04 15:37:30,336] Server Started, adress is 1234:5556
+[2020-05-04 15:37:46,111] Closed server
+[2020-05-04 15:38:45,542] Server Started, adress is 1234:5556
+[2020-05-04 15:41:40,197] Server Started, adress is 127.0.0.1:5556
+[2020-05-04 15:41:45,043] Closed server
+[2020-05-04 15:41:56,238] Server Started, adress is 127.0.0.1:5555
+[2020-05-04 15:42:54,018] Closed server
