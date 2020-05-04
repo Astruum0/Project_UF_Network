@@ -170,7 +170,7 @@ while True:
             pong_games[ID].connected = True
             p = 1
             logger.info(
-                f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Pong Game {ID} ..."
+                f'''Connecting {pseudo} {str(addr).replace(', ', ':').replace("'", "")} to Pong Game {ID} ...'''
             )
         except ValueError:
             for gameId in pong_games:
@@ -182,7 +182,7 @@ while True:
                     pong_games[ID].list_pseudo.append(pseudo)
 
                     logger.info(
-                        f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Pong Game {ID} ..."
+                        f'''Connecting {pseudo} {str(addr).replace(', ', ':').replace("'", "")} to Pong Game {ID} ...'''
                     )
                     break
             if not game_entered or choosed_id == "create":
@@ -192,7 +192,7 @@ while True:
                         ID = id_
                         p = 0
                         logger.info(
-                            f"{pseudo} {str(addr).replace(', ', ':')} created Pong Game {ID}"
+                            f'''{pseudo} {str(addr).replace(', ', ':').replace("'", "")} created Pong Game {ID}'''
                         )
                         break
         start_new_thread(online_pong, (conn, p, ID, pseudo))
@@ -201,9 +201,9 @@ while True:
         game_entered = False
         ID = 0
         try:
-            ID = int(choosed_id)
+            ID = int(choosed_id)-1
             logger.info(
-                f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Snake Game {ID} ..."
+                f'''Connecting {pseudo} {str(addr).replace(', ', ':').replace("'", "")} to Snake Game {ID} ...'''
             )
         except:
             for gameId in snake_games:
@@ -215,7 +215,7 @@ while True:
                     ID = gameId
                     game_entered = True
                     logger.info(
-                        f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Snake Game {ID}"
+                        f'''Connecting {pseudo} {str(addr).replace(', ', ':').replace("'", "")} to Snake Game {ID}'''
                     )
                     break
             if not game_entered or choosed_id == "create":
@@ -224,7 +224,7 @@ while True:
                         snake_games[id_] = Snake_game(id_)
                         ID = id_
                         logger.info(
-                            f"{pseudo} {str(addr).replace(', ', ':')} created Snake Game {ID} ..."
+                            f'''{pseudo} {str(addr).replace(', ', ':').replace("'", "")} created Snake Game {ID} ...'''
                         )
                         break
 
@@ -253,7 +253,7 @@ while True:
             tic_tac_toe_games[ID].connected = True
             p = 1
             logger.info(
-                f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Snake Game {ID}"
+                f'''Connecting {pseudo} {str(addr).replace(', ', ':').replace("'", "")} to Snake Game {ID}'''
             )
         else:
             for gameId in tic_tac_toe_games:
@@ -263,7 +263,7 @@ while True:
                     tic_tac_toe_games[ID].connected = True
                     game_entered = True
                     logger.info(
-                        f"Connecting {pseudo} {str(addr).replace(', ', ':')} to Snake Game {ID}"
+                        f'''Connecting {pseudo} {str(addr).replace(', ', ':').replace("'", "")} to Snake Game {ID}'''
                     )
                     p = 1
                     break
@@ -274,7 +274,7 @@ while True:
                         ID = id_
                         p = 0
                         logger.info(
-                            f"{pseudo} {str(addr).replace(', ', ':')} created TicTacToe Game {ID} ..."
+                            f'''{pseudo} {str(addr).replace(', ', ':').replace("'", "")} created TicTacToe Game {ID} ...'''
                         )
                         break
         tic_tac_toe_games[ID].list_pseudo.append(pseudo)

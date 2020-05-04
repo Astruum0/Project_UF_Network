@@ -39,10 +39,6 @@ def pong_client(pseudo, id_):
         clock.tick(60)
         win.blit(bg, (0, 0))
         try:
-            print(game.winner)
-        except:
-            pass
-        try:
             game = net.send("get")
         except:
             jeu = False
@@ -74,7 +70,6 @@ def pong_client(pseudo, id_):
             
             
         else:
-            print(game.winner, player, increased) 
             if game.winner == player and increased == False:
                 win_increase(pseudo)
                 increased = True
