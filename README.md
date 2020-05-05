@@ -11,19 +11,21 @@ Pour jouer à PyNetGames, vous devez tout d'abord lancer le serveur sur l'appare
 ```
 python server.py
 ```
+*Par défaut, le serveur utilise l'adresse ip de votre machine au port 5555*
 
 Ensuite lancez le client en faisant:
 
 ```
 python launch.py
 ```
+*Par défaut, votre client considerera que le serveur se situe à votre adresse ip, au port 5555*
 
 notez que si vous lancez le client sur un autre appareil que votre serveur, vous devez lui renseigner son adresse ip, 
 pour cela rendez vous dans la rubrique **Configuration**
 
 ## III. Configuration
 
-Vous avez la possibilité de choisir l'adresse ip de votre serveur, de choisir votre port et aussi de garder des valeurs par défaut pour les futurs lancement, pour se faire, faites:
+Vous avez la possibilité de choisir l'adresse ip de votre serveur, de choisir votre port et aussi de garder des valeurs par défaut pour les futurs lancements, pour se faire, faites:
 ```
 python server.py -ip [ip/"auto"] -p [port] [-s pour sauvegarder par le futur]
 ```
