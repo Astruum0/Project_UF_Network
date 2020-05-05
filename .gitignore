@@ -3,3 +3,4 @@
 __pycache__
 .gitattributes
 server_logs.log
+configs.json

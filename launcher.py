@@ -198,8 +198,8 @@ def mdp(database, win):
                     
     def send_mail(mail, pseudo):
         server = smtplib.SMTP('smtp.gmail.com:587')
-        username = 'mat33360@@gmail.com'
-        password = '20106969Aa'
+        username = 'pynetgames@gmail.com'
+        password = '20102001Aa'
         server.starttls()
         server.login(username,password)
         msg = email.mime.text.MIMEText(f'Une demande de réinitialisation du mot de passe pour le compte "{pseudo}" à été demandé.'
