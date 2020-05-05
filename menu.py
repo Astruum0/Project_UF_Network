@@ -81,3 +81,5 @@ if pseudo != None:
             win.blit(hover, (x_hover, y_hover))
 
         pygame.display.update()
+    pygame.display.quit()
+    launch(None)

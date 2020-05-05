@@ -1,5 +1,95 @@
 [2020-05-03 19:31:42,121] Server Started, adress is 192.168.0.14:5556
 [2020-05-03 19:31:45,517] Closed server
+<<<<<<< HEAD
+[2020-05-03 19:42:27,852] Server Started, adress is 192.168.0.44:5556
+[2020-05-03 19:43:02,865] Matteo ('192.168.0.44':54352) created Pong Game 0
+[2020-05-03 19:43:05,201] Connecting Matteo2 ('192.168.0.44':54354) to Pong Game 0 ...
+[2020-05-03 19:43:16,918] Matteo disconnected from Pong Game 0
+[2020-05-03 19:43:16,919] Closing Game 0
+[2020-05-03 19:43:16,932] Matteo2 disconnected from Pong Game 0
+[2020-05-03 19:43:19,752] Matteo ('192.168.0.44':54363) created TicTacToe Game 0 ...
+[2020-05-03 19:43:21,469] Connecting Matteo2 ('192.168.0.44':54365) to Snake Game 0
+[2020-05-03 19:43:27,187] Matteo disconnected from TicTacToe Game 0
+[2020-05-03 19:43:27,187] Closing Game 0
+[2020-05-03 19:43:27,191] Matteo2 disconnected from TicTacToe Game 0
+[2020-05-03 19:43:30,929] Matteo ('192.168.0.44':54368) created Snake Game 0 ...
+[2020-05-03 19:43:32,694] Connecting Matteo2 ('192.168.0.44':54370) to Snake Game 1 ...
+[2020-05-03 19:45:50,079] Server Started, adress is 192.168.0.44:5556
+[2020-05-03 19:46:10,222] Matteo ('192.168.0.44':54404) created Snake Game 0 ...
+[2020-05-03 19:46:23,152] Connecting Matteo ('192.168.0.44':54410) to Snake Game 1 ...
+[2020-05-03 19:46:37,488] Matteo disconnected from Snake Game 0
+[2020-05-03 19:46:37,490] Closing Snake Game 0
+[2020-05-03 19:56:12,051] Server Started, adress is 192.168.0.44:5556
+[2020-05-03 19:57:08,014] Matteo2 (192.168.0.44:54491) created Pong Game 0
+[2020-05-03 19:57:16,813] Matteo2 disconnected from Pong Game 0
+[2020-05-03 19:57:16,816] Closing Game 0
+[2020-05-03 19:58:32,509] Server Started, adress is 192.168.0.44:5556
+[2020-05-03 19:58:51,844] Matteo (192.168.0.44:54523) created Pong Game 0
+[2020-05-03 19:59:06,403] Connecting Matteo2 (192.168.0.44:54526) to Pong Game 0 ...
+[2020-05-03 19:59:10,766] Matteo2 disconnected from Pong Game 0
+[2020-05-03 19:59:10,770] Closing Game 0
+[2020-05-03 19:59:10,777] Matteo disconnected from Pong Game 0
+[2020-05-03 19:59:13,096] Matteo2 (192.168.0.44:54528) created Snake Game 0 ...
+[2020-05-03 19:59:17,482] Connecting Matteo (192.168.0.44:54530) to Snake Game 1 ...
+[2020-05-03 20:00:36,170] Server Started, adress is 192.168.0.44:5556
+[2020-05-03 20:00:50,691] Matteo (192.168.0.44:54537) created Snake Game 0 ...
+[2020-05-03 20:01:43,686] Server Started, adress is 192.168.0.44:5556
+[2020-05-03 20:02:03,664] Matteo (192.168.0.44:54553) created Snake Game 0 ...
+[2020-05-03 20:02:18,916] Connecting Matteo (192.168.0.44:54555) to Snake Game 1 ...
+[2020-05-03 20:05:59,374] Server Started, adress is 192.168.0.44:5556
+[2020-05-03 20:06:14,236] Matteo (192.168.0.44:54632) created Snake Game 0 ...
+[2020-05-03 20:06:27,649] Connecting Matteo (192.168.0.44:54634) to Snake Game 0 ...
+[2020-05-03 20:06:35,405] Matteo disconnected from Snake Game 0
+[2020-05-03 20:06:35,457] Closing Snake Game 0
+[2020-05-03 20:06:35,467] Matteo disconnected from Snake Game 0
+[2020-05-03 20:08:29,870] Server Started, adress is 192.168.0.44:5556
+[2020-05-03 20:12:20,403] CHRISTOPHE (192.168.0.46:51136) created Pong Game 0
+[2020-05-03 20:12:22,189] Matteo (192.168.0.44:54646) created Pong Game 1
+[2020-05-03 20:12:23,917] Matteo disconnected from Pong Game 1
+[2020-05-03 20:12:23,917] Closing Game 1
+[2020-05-03 20:12:26,600] Connecting Matteo (192.168.0.44:54648) to Pong Game 0 ...
+[2020-05-03 20:13:38,244] Matteo disconnected from Pong Game 0
+[2020-05-03 20:13:38,245] Closing Game 0
+[2020-05-03 20:13:38,253] CHRISTOPHE disconnected from Pong Game 0
+[2020-05-03 20:13:42,877] CHRISTOPHE (192.168.0.46:51138) created TicTacToe Game 0 ...
+[2020-05-03 20:13:43,971] Connecting Matteo (192.168.0.44:54657) to Snake Game 0
+[2020-05-03 20:14:08,270] Matteo disconnected from TicTacToe Game 0
+[2020-05-03 20:14:08,271] Closing Game 0
+[2020-05-03 20:14:08,276] CHRISTOPHE disconnected from TicTacToe Game 0
+[2020-05-03 20:14:11,218] CHRISTOPHE (192.168.0.46:51141) created Snake Game 0 ...
+[2020-05-03 20:14:13,730] Connecting Matteo (192.168.0.44:54659) to Snake Game 0
+[2020-05-03 20:15:23,983] Matteo disconnected from Snake Game 0
+[2020-05-03 20:15:23,984] Closing Snake Game 0
+[2020-05-03 20:15:24,018] CHRISTOPHE disconnected from Snake Game 0
+[2020-05-03 20:15:46,394] CHRISTOPHE (192.168.0.46:51143) created TicTacToe Game 0 ...
+[2020-05-03 20:15:48,640] Connecting Matteo (192.168.0.44:54661) to Snake Game 0
+[2020-05-03 20:16:09,620] Matteo disconnected from TicTacToe Game 0
+[2020-05-03 20:16:09,620] Closing Game 0
+[2020-05-03 20:16:09,628] CHRISTOPHE disconnected from TicTacToe Game 0
+[2020-05-03 20:16:13,187] CHRISTOPHE (192.168.0.46:51146) created TicTacToe Game 0 ...
+[2020-05-04 17:31:44,513] Server Started, adress is 192.168.43.63:5556
+[2020-05-04 17:32:55,598] Malgache (192.168.43.63:61250) created Pong Game 0
+[2020-05-04 17:33:01,139] Connecting Matteo (192.168.43.63:61252) to Pong Game 0 ...
+[2020-05-04 17:33:13,117] Malgache disconnected from Pong Game 0
+[2020-05-04 17:33:13,118] Closing Game 0
+[2020-05-04 17:33:13,122] Matteo disconnected from Pong Game 0
+[2020-05-04 17:33:14,951] Malgache (192.168.43.63:61255) created TicTacToe Game 0 ...
+[2020-05-04 17:33:17,028] Connecting Matteo (192.168.43.63:61257) to Snake Game 0
+[2020-05-04 17:33:28,645] Malgache disconnected from TicTacToe Game 0
+[2020-05-04 17:33:28,646] Closing Game 0
+[2020-05-04 17:33:28,655] Matteo disconnected from TicTacToe Game 0
+[2020-05-04 17:33:30,728] Malgache (192.168.43.63:61260) created Snake Game 0 ...
+[2020-05-04 17:33:33,755] Connecting Matteo (192.168.43.63:61262) to Snake Game 0 ...
+[2020-05-04 17:34:06,868] Matteo disconnected from Snake Game 0
+[2020-05-04 17:34:06,870] Closing Snake Game 0
+[2020-05-04 17:34:06,890] Malgache disconnected from Snake Game 0
+[2020-05-04 17:35:36,313] Matteo (192.168.43.63:61269) created Snake Game 0 ...
+[2020-05-04 17:36:24,295] Connecting Malgache (192.168.43.63:61276) to Snake Game 0 ...
+[2020-05-04 17:36:39,833] Malgache disconnected from Snake Game 0
+[2020-05-04 17:36:39,834] Closing Snake Game 0
+[2020-05-04 17:36:39,851] Matteo disconnected from Snake Game 0
+[2020-05-05 16:18:35,752] Server Started, adress is 192.168.0.44:5556
+=======
 [2020-05-04 14:05:56,555] Server Started, adress is 192.168.0.44:5556
 [2020-05-04 14:06:40,097] Server Started, adress is 192.168.0.20:5556
 [2020-05-04 14:06:46,618] Closed server
@@ -12,3 +102,4 @@
 [2020-05-04 15:41:45,043] Closed server
 [2020-05-04 15:41:56,238] Server Started, adress is 127.0.0.1:5555
 [2020-05-04 15:42:54,018] Closed server
+>>>>>>> deaf34a8293aca9378b78170f86c26da37bbad2c
