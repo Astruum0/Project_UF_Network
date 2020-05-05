@@ -16,7 +16,7 @@ python server.py
 Ensuite lancez le client en faisant:
 
 ```
-python launch.py
+python menu.py
 ```
 *Par défaut, votre client considerera que le serveur se situe à votre adresse ip, au port 5555*
 
