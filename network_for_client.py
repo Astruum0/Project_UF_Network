@@ -1,12 +1,14 @@
 import socket
 import pickle
+from config import getValues
 
 
 class Network:
     def __init__(self, game_type, pseudo, gameId):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server = "192.168.0.44"
-        self.port = 5556
+        self.server, self.port = getValues()
+        if self.server == "":
+            self.server = socket.gethostbyname(socket.gethostname())
         self.addr = (self.server, self.port)
         self.p = self.connect(game_type, pseudo, gameId)
 

@@ -8,31 +8,39 @@ import sys
 from pong_class import Pong_game
 from snake_class import Snake_game, Snake
 from tic_tac_toe__class import Tic_Tac_Toe_Game
+from config import help_msg, saveValues, getValues
 
 pygame.font.init()
 
-server = "192.168.0.44"
-port = 5556
 
-for i, arg in enumerate(sys.argv):
+server, port = getValues()
+if server == "":
+    server = socket.gethostbyname(socket.gethostname())
+
+if len(sys.argv) == 2 and sys.argv[1] == "--help":
+    sys.exit(help_msg)
+
+for i, arg in enumerate(sys.argv[1:]):
     if arg == "-ip":
         try:
-            server = sys.argv[i + 1]
+            server = sys.argv[i + 2]
+            if server == "auto":
+                server = socket.gethostbyname(socket.gethostname())
             ipaddress.ip_address(server)
         except:
             sys.exit("Error - Invalid argument for ip, --help for more info")
 
     elif arg == "-p":
         try:
-            port = int(sys.argv[i + 1])
+            port = int(sys.argv[i + 2])
         except:
             sys.exit("Error - Invalid argument for host, --help for more info")
 
-    elif not sys.argv[i - 1] in ["-ip", "-p"]:
+    elif arg == "-s":
+        saveValues(server, port)
+
+    elif not sys.argv[i] in ["-ip", "-p", "-s"]:
         sys.exit("Error - Invalid arguments, --help for more info")
-
-
-print(server, port)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
