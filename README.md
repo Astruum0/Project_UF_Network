@@ -39,7 +39,7 @@
     ```
     -> *Par défaut, le serveur utilise l'adresse ip de votre machine au port 5555*
 
-- Ensuite lancez le client en tapant la commande :
+- Lancez le jeu en double cliquant sur menu.py ou depuis une autre invite de commandes tapez :
 
     ```
     python menu.py
