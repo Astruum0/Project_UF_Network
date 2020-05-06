@@ -1,9 +1,9 @@
 # Documentation - PyNetGames
 
 ## I. Présentation
-
-
-![](https://i.imgur.com/2SgPE1H.png)
+<p align="center">
+<img src="https://i.imgur.com/2SgPE1H.png">
+</p>
 
 PyNetGames est un jeu développé par Arthur Vella et Mattéo Christophe dans le cadre du Projet Réseau de Ynov sur la période de Mars 2020 à Mai 2020. 
 
