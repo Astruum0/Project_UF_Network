@@ -5,14 +5,10 @@ from database import Database
 import re
 import smtplib
 import email.mime.text
+from hided import *
+
 
 width = 600
-mysql_config = {
-    "host": "mysql-sql-crackito.alwaysdata.net",
-    "user": "204318",
-    "passwd": "20102001Aa",
-    "database": "sql-crackito_projetreseau",
-}
 pseudo = None
 
 def launch(win):
@@ -194,8 +190,6 @@ def mdp(database, win):
                     
     def send_mail(mail, pseudo):
         server = smtplib.SMTP('smtp.gmail.com:587')
-        username = 'pynetgames.py@gmail.com'
-        password = '20102001Aa'
         server.starttls()
         server.login(username,password)
         msg = email.mime.text.MIMEText(f'Une demande de réinitialisation du mot de passe pour le compte "{pseudo}" à été demandé.'
@@ -206,10 +200,6 @@ def mdp(database, win):
         msg['To'] = pseudo
         server.sendmail('PyNetGame@gmail.com', mail, msg.as_string())
         server.quit()
-        error_mail.config(text="Le mail a bien été envoyé")
-        error_mail.pack()
-        window.update()
-        error_mail.place(x=300-(error_mail.winfo_width()/2), y=340)
     
     def check_pseudo(pseudo):
         try:
