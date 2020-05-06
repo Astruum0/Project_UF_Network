@@ -243,13 +243,15 @@ def mdp(database, win):
 
 def error():
     window = Tk()
+    retry_button = PhotoImage(file="menu_sprites/retry.png")
+    background_image=PhotoImage(file="menu_sprites/no_co.png")
+    background_label = Label(window, image=background_image)
+    background_label.place(x=0, y=0)
     window.title("PyNetGames")
     window.geometry(f"{width}x{width}")
     window.configure(background="black")
-    error = Label(window, font=("PixelOperator8",40), text="No Internet Connexion")
-    error.place(x=35, y=width/2-50)
-    retry = Button(window, text="Retry", command= lambda win = window : launch(win), width=10)
-    retry.place(x=width/2-40, y=400)
+    retry = Button(window, image=retry_button, command= lambda win = window : launch(win), bg="black", border="0")
+    retry.place(x=width/2-100, y=450)
     window.update()
     window.mainloop()
     

@@ -1,0 +1,17 @@
+[2020-05-06 18:17:44,892] Server Started, adress is 169.254.172.5:5555
+[2020-05-06 18:20:52,197] Server Started, adress is 169.254.172.5:5555
+[2020-05-06 18:21:15,721] Matteo (169.254.172.5:60398) created Pong Game 0
+[2020-05-06 18:21:17,803] Connecting Arthur (169.254.172.5:60400) to Pong Game 0 ...
+[2020-05-06 18:21:28,174] Matteo disconnected from Pong Game 0
+[2020-05-06 18:21:28,176] Closing Game 0
+[2020-05-06 18:21:28,186] Arthur disconnected from Pong Game 0
+[2020-05-06 18:21:31,565] Matteo (169.254.172.5:60404) created TicTacToe Game 0 ...
+[2020-05-06 18:21:33,214] Connecting Arthur (169.254.172.5:60405) to Snake Game 0
+[2020-05-06 18:21:44,197] Matteo disconnected from TicTacToe Game 0
+[2020-05-06 18:21:44,198] Closing Game 0
+[2020-05-06 18:21:44,203] Arthur disconnected from TicTacToe Game 0
+[2020-05-06 18:21:45,860] Matteo (169.254.172.5:60408) created Snake Game 0 ...
+[2020-05-06 18:21:47,748] Connecting Arthur (169.254.172.5:60410) to Snake Game 0 ...
+[2020-05-06 18:21:53,318] Matteo disconnected from Snake Game 0
+[2020-05-06 18:21:53,319] Closing Snake Game 0
+[2020-05-06 18:21:53,320] Arthur disconnected from Snake Game 0
