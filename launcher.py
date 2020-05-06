@@ -44,11 +44,11 @@ def connected(database):
                     pseudo = l_username
                     window.destroy()
                 else:
-                    error_login.config(text="Mot de passe incorrect", background="grey")
+                    error_login.config(text="Mot de passe incorrect")
             else:
-                error_login.config(text="Cette utilisateur n'existe pas", background="grey")
+                error_login.config(text="Cette utilisateur n'existe pas")
         else:
-            error_login.config(text="Veuillez renseigner\ntout les champs", background="grey")
+            error_login.config(text="Veuillez renseigner\ntout les champs")
 
     def valid_username(username):
         try:
@@ -80,20 +80,20 @@ def connected(database):
                         pseudo = r_user_name
                         window.destroy()
                     else:
-                        error_register.config(text="Email invalide", background="grey")
+                        error_register.config(text="Email invalide")
             else:
-                error_register.config(text="Ce nom est déjà pris", background="grey")
+                error_register.config(text="Ce nom est déjà pris")
         else:
-            error_register.config(text="Veuillez renseigner\ntout les champs", background="grey")
+            error_register.config(text="Veuillez renseigner\ntout les champs")
 
     def valid_password(password1, password2):
         if password1 == password2:
             if len(password1) >= 6:
                 return True
             else:
-                error_register.config(text="Votre mot de passe\ndoit faire au moins\nsix characteres", background="grey")
+                error_register.config(text="Votre mot de passe\ndoit faire au moins\nsix characteres")
         else:
-            error_register.config(text="Les deux mots de passe\nne correspondent pas", background="grey")
+            error_register.config(text="Les deux mots de passe\nne correspondent pas")
         return False
 
     def r_valid_username(username):
@@ -121,57 +121,45 @@ def connected(database):
         except:
             launch(window)
 
-
-    error_login = Label(window, font=("PixelOperator8",15), text="", background ="black")
+    background_image=PhotoImage(file="menu_sprites/login_background.png")
+    background_label = Label(window, image=background_image)
+    background_label.place(x=0, y=0)
+    error_login = Label(window, font=("PixelOperator8",15), text="", background ="black", foreground="#fe3a35")
     error_login.place(x=70, y=350)
-    error_register = Label(window, font=("PixelOperator8",15), text="", background ="black")
+    error_register = Label(window, font=("PixelOperator8",15), text="", background ="black", foreground="#fe3a35")
     error_register.place(x=370, y=350)
     window.bind('<Return>', login)
-    ### Partie Login    
-    log = Label(window, font=("PixelOperator8",40), text="Log In", width=7)
-    log.place(x=38, y=50)
+    login_image = PhotoImage(file="menu_sprites/login.png")
+    register_image = PhotoImage(file="menu_sprites/register.png")
+    mdp_image = PhotoImage(file="menu_sprites/mdp.png")
+    
     #Username
-    name = Label(window, font=("PixelOperator8",10), text="Username :", width=9)
-    name.place(x=38, y=149)
     username = Entry(window, width=20)
-    username.place(x=135, y=150)
+    username.place(x=162, y=106)
     #Password
-    passw = Label(window, font=("PixelOperator8",10), text="Password :", width=9)
-    passw.place(x=38, y=189)
     password = Entry(window, show='*', width=20)
-    password.place(x=135, y=190)
-    #Bouton
-    login = Button(window, text="Login", command=login, width=10)
+    password.place(x=162, y=154)
+    #Bouton        
+    login = Button(window, image=login_image, bg="black", border="0", command=login)
     login.place(x=50, y=430)
     #Bouton mdp oublié
-    login = Button(window, text="Mdp oublié ?", command= lambda data = database, win = window : mdp(data, win), width=10)
-    login.place(x=175, y=430)
+    mdp_forgot = Button(window, image=mdp_image, bg="black", border="0", command= lambda data = database, win = window : mdp(data, win))
+    mdp_forgot.place(x=175, y=423)
 
-    ###Partie Register
-    reg = Label(window, font=("PixelOperator8",40), text="Register", width=7)
-    reg.place(x=338, y=50)
     #Username
-    r_name = Label(window, font=("PixelOperator8",10), text="Username :", width=9)
-    r_name.place(x=338, y=149)
     r_username = Entry(window, width=20)
-    r_username.place(x=435, y=150)
+    r_username.place(x=460, y=106)
     #Password
-    r_passw = Label(window, font=("PixelOperator8",10), text="Password :", width=9)
-    r_passw.place(x=338, y=189)
     r_password = Entry(window, show='*', width=20)
-    r_password.place(x=435, y=190)
+    r_password.place(x=460, y=156)
     #Confirm password
-    r_conf_passw = Label(window, font=("PixelOperator8",10), text="Confirm\npassword :", width=9)
-    r_conf_passw.place(x=338, y=229)
     r_conf_password = Entry(window, show='*', width=20)
-    r_conf_password.place(x=435, y=237)
+    r_conf_password.place(x=460, y=215)
     #email
-    mail = Label(window, font=("PixelOperator8",10), text="Adresse\nmail :", width=9)
-    mail.place(x=338, y=283)
     mail_entry = Entry(window, width=20)
-    mail_entry.place(x=435, y=290)
+    mail_entry.place(x=460, y=285)
     #Bouton
-    register = Button(window, text="Register", command=register, width=10)
+    register = Button(window, image=register_image, bg="black", border="0", command=register)
     register.place(x=425, y=430)
     window.update()
     window.mainloop()
@@ -188,17 +176,25 @@ def mdp(database, win):
                     done.pack()
                     window.update()
                     done.place(x=300-(done.winfo_width()/2), y=350)
-                else:
-                    print("Adresse mail non valide")
+                else:                   
+                    error_mail.config(text="Adresse mail non valide")
+                    error_mail.pack()
+                    window.update()
+                    error_mail.place(x=300-(error_mail.winfo_width()/2), y=340)
             else:
-               print("Ce pseudo n'existe pas") 
+                error_mail.config(text="Ce pseudo n'existe pas")
+                error_mail.pack()
+                window.update()
+                error_mail.place(x=300-(error_mail.winfo_width()/2), y=340)
         else:
-            print("Veuillez renseigner tout les champs")
-            
+            error_mail.config(text="Veuillez renseigner tout les champs")
+            error_mail.pack()
+            window.update()
+            error_mail.place(x=300-(error_mail.winfo_width()/2), y=340)
                     
     def send_mail(mail, pseudo):
         server = smtplib.SMTP('smtp.gmail.com:587')
-        username = 'pynetgames@gmail.com'
+        username = 'pynetgames.py@gmail.com'
         password = '20102001Aa'
         server.starttls()
         server.login(username,password)
@@ -210,6 +206,10 @@ def mdp(database, win):
         msg['To'] = pseudo
         server.sendmail('PyNetGame@gmail.com', mail, msg.as_string())
         server.quit()
+        error_mail.config(text="Le mail a bien été envoyé")
+        error_mail.pack()
+        window.update()
+        error_mail.place(x=300-(error_mail.winfo_width()/2), y=340)
     
     def check_pseudo(pseudo):
         try:
@@ -227,31 +227,29 @@ def mdp(database, win):
         
     win.destroy()
     window = Tk()
+    bg = PhotoImage(file="menu_sprites/reinitialisation.png")
+    bg_ = Label(window, image=bg)
+    bg_.place(x=0,y=0)
     window.title("PyNetGames")
     window.geometry(f"{width}x{width}")
     window.configure(background="black")
     window.bind('<Return>', check)
     window.protocol("WM_DELETE_WINDOW", lambda win = window : launch(win))
-  
-    title = Label(window, font=("PixelOperator8",40), text="Réinitialisation du\nmot de passe", background="black", fg="white")
-    title.pack()
-    window.update()
-    title.place(x=300-(title.winfo_width()/2), y=0)
+    valider=PhotoImage(file="menu_sprites/valider.png")
+    error_mail = Label(window, text="", font=("blabla", 20), background ="black", foreground="#fe3a35")
+    error_mail.place(x=300, y=340)
+     
+    pseudo_entry = Entry(window, width=30)
+    pseudo_entry.place(x=320, y=210)
+
+    email_entry = Entry(window, width=30)
+    email_entry.place(x=320, y=280)
+
+    register = Button(window, image=valider, bg="black", border="0", command=check)
+    register.place(x=140, y=400)
     
-    pseudo = Label(window, font=("PixelOperator8",10), text="Username :", width=9)
-    pseudo.place(x=200, y=180)
-    pseudo_entry = Entry(window, width=20)
-    pseudo_entry.place(x=300, y=183)
+    window.mainloop()
 
-    email_lab = Label(window, font=("PixelOperator8",10), text="Mail :", width=9)
-    email_lab.place(x=200, y=230)
-    email_entry = Entry(window, width=20)
-    email_entry.place(x=300, y=233)
-
-    confirm = Button(window, text="Confirm", command=check, width=10)
-    confirm.pack()
-    window.update()
-    confirm.place(x=300-(confirm.winfo_width()/2), y=283)
 
 def error():
     window = Tk()
