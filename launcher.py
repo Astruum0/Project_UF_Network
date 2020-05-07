@@ -131,16 +131,16 @@ def connected(database):
     
     #Username
     username = Entry(window, width=20)
-    username.place(x=162, y=106)
+    username.place(x=158, y=106)
     #Password
     password = Entry(window, show='*', width=20)
-    password.place(x=162, y=154)
+    password.place(x=158, y=154)
     #Bouton        
     login = Button(window, image=login_image, bg="black", border="0", command=login)
-    login.place(x=50, y=430)
+    login.place(x=55, y=430)
     #Bouton mdp oublié
     mdp_forgot = Button(window, image=mdp_image, bg="black", border="0", command= lambda data = database, win = window : mdp(data, win))
-    mdp_forgot.place(x=175, y=423)
+    mdp_forgot.place(x=35, y=200)
 
     #Username
     r_username = Entry(window, width=20)
@@ -156,7 +156,7 @@ def connected(database):
     mail_entry.place(x=460, y=285)
     #Bouton
     register = Button(window, image=register_image, bg="black", border="0", command=register)
-    register.place(x=425, y=430)
+    register.place(x=370, y=430)
     window.update()
     window.mainloop()
 

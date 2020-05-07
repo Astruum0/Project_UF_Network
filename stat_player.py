@@ -1,13 +1,8 @@
 import pygame
 from database import Database
 from pygame.locals import QUIT, MOUSEBUTTONDOWN, MOUSEMOTION
+from hided import *
 
-mysql_config = {
-    "host": "mysql-sql-crackito.alwaysdata.net",
-    "user": "204318",
-    "passwd": "20102001Aa",
-    "database": "sql-crackito_projetreseau",
-}
 try:
     database = Database(mysql_config)
     database.connect()
@@ -79,8 +74,20 @@ def leaderboard(pseudo):
     while run:
         win.blit(bg, (0, 0))
         for i, people in enumerate(stat[page*5:page*5+5]):
+            last = None
             for j, info in enumerate(people):
-                win.blit(font.render(str(info), 1, (254, 58, 53)if str(info)== pseudo else (255, 255, 255)), (100+j*350, 250+i*50))
+                if (page==0 and i==0):
+                    couleur = (255,215,0)
+                elif (page==0 and i==1):
+                    couleur = (192,192,192)
+                elif (page==0 and i==2):
+                    couleur = (205, 127, 50)
+                elif str(info)== pseudo or last == pseudo:
+                    couleur = (255, 255, 255)
+                    last = pseudo
+                else:
+                    couleur = (254, 58, 53)
+                win.blit(font.render(str(info), 1, couleur), (100+j*350, 250+i*50))
         if choosed_category == "pong":
             win.blit(hover, (117, 149))
         if choosed_category == "ttt":
@@ -122,3 +129,4 @@ def leaderboard(pseudo):
                             page -= 1
 
             pygame.display.update()
+leaderboard("Matteo")

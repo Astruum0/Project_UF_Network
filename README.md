@@ -5,17 +5,17 @@
 <img src="https://i.imgur.com/2SgPE1H.png">
 </p>
 
-- PyNetGames est un jeu développé par Arthur Vella et Mattéo Christophe dans le cadre du Projet Réseau de Ynov sur la période de Mars 2020 à Mai 2020. 
+- PyNetGames est un jeu développé par Arthur Vella et Mattéo Christophe dans le cadre du Projet Réseau de Ynov sur la période de mars 2020 à mai 2020. 
 
 - Le concept du logiciel est de pouvoir jouer à plusieurs en réseau local. 3 jeux sont disponibles pour le moment et un leaderboard général est présent afin de comparer vos scores à ceux des autres joueurs.
 
-- Un système de login à également été mis en place afin de pouvoir créer et se connecter à son compte personnel.
+- Un système de login a également été mis en place afin de pouvoir créer et se connecter à son compte personnel.
 
-- Réferez vous à la suite du README pour installer et configurer le jeu.
+- Référez vous à la suite du README pour installer et configurer le jeu.
 
 ## II. Installation
 
-- Après avoir télechargé le dossier, il vous faudra d'abord rentrer dans l'environnement virtuel, ce qui permettra de n'avoir rien à installer sur votre ordinateur. Pour cela rendez vous avec votre invite de commandes dans le dossier principal et tapez :
+- Après avoir téléchargé le dossier, il vous faudra d'abord rentrer dans l'environnement virtuel, ce qui permettra de n'avoir rien à installer sur votre ordinateur. Pour cela rendez-vous avec votre invite de commande dans le dossier principal et tapez :
     ```
     source VirtualEnv/Scripts/activate
     ```
@@ -39,7 +39,7 @@
     ```
     -> *Par défaut, le serveur utilise l'adresse ip de votre machine au port 5555*
 
-- Lancez le jeu en double cliquant sur menu.py ou depuis une autre invite de commandes tapez :
+- Lancez le jeu en double cliquant sur menu.py ou depuis une autre invite de commande tapez :
 
     ```
     python menu.py
@@ -47,11 +47,11 @@
     -> *Par défaut, votre client considérera que le serveur se situe à votre adresse ip, au port 5555*
 
 - Notez que si vous lancez le client sur un autre appareil que votre serveur, vous devez lui renseigner son adresse ip.
-Pour cela rendez vous dans la rubrique **Configuration**.
+Pour cela référez vous à la rubrique **Configuration**.
 
 ## IV. Configuration
 
-- Vous avez la possibilité de choisir l'adresse ip de votre serveur, de choisir votre port et aussi de garder des valeurs par défaut pour les futurs lancements, pour se faire, effectuer :
+- Vous avez la possibilité de choisir l'adresse ip de votre serveur, de choisir votre port et aussi de garder des valeurs par défaut pour les futurs lancements, pour ce faire, effectuer :
     ```
     python server.py -ip [ip/"auto"] -p [port] [-s pour sauvegarder les paramètres]
     ```
