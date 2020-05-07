@@ -129,4 +129,3 @@ def leaderboard(pseudo):
                             page -= 1
 
             pygame.display.update()
-leaderboard("Matteo")
